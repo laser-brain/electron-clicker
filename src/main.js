@@ -8,7 +8,7 @@ function createWindow() {
     win = new BrowserWindow({
         frame: false,
         alwaysOnTop: true,
-        //resizable: false,
+        resizable: false,
         width: 190,
         height: 240,
         webPreferences: {
