@@ -1,10 +1,9 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
-require('dotenv').config();
 
-const env = process.env.NODE_ENV || 'development';
+const config = require('./config');
 
-if (env === 'development') {
+if (config.environment === 'development' && config.hotseat === true) {
     require('electron-reload')(__dirname, {
         electron: path.join(__dirname, 'node_modules', '.bin', 'electron'),
         hardResetMethod: 'exit'
@@ -17,9 +16,9 @@ function createWindow() {
     win = new BrowserWindow({
         frame: false,
         alwaysOnTop: true,
-        resizable: false,
-        width: 200,
-        height: 250,
+        //resizable: false,
+        width: 190,
+        height: 240,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js')
         }
@@ -36,8 +35,7 @@ app.whenReady().then(() => {
             createWindow();
         }
     });
-
-    win.webContents.send('fromMain', { event: 'set-server-uri', value: process.env.SERVER_URI });
+    win.webContents.send('fromMain', { event: 'set-server-uri', value: config['server-uri'] });
 });
 
 app.on('window-all-closed', () => {

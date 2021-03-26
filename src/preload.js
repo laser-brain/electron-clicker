@@ -2,10 +2,11 @@ const {
     contextBridge,
     ipcRenderer
 } = require('electron');
+const config = require('./config');
 
 contextBridge.exposeInMainWorld(
     'api', {
-        send: (channel, data) => {            
+        send: (channel, data) => {
             let validChannels = ['toMain'];
             if (validChannels.includes(channel)) {
                 ipcRenderer.send(channel, data);
@@ -23,12 +24,11 @@ contextBridge.exposeInMainWorld(
 window.addEventListener('DOMContentLoaded', async () => {
     // load user name
     const user = localStorage.getItem('user');
-    if(user) {
+    if (user) {
         document.getElementById('user').value = user;
     }
-
     // load data from server
-    const response = await fetch(`${process.env.SERVER_URI}/api/click`);
+    const response = await fetch(`${config['server-uri']}/api/click`);
     const data = await response.json();
     document.getElementById('clicks').textContent = `Count: ${data.clicks}`;
 });

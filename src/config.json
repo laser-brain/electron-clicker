@@ -1,0 +1,5 @@
+{
+  "server-uri": "<your-server-url-here>",
+  "environment": "development",
+  "hotseat": true
+}

@@ -6,8 +6,9 @@ document.getElementById('exit').onclick = () => {
 
 window.api.receive("fromMain", (data) => {
     switch (data.event) {
-        case 'set-server-uri':
+        case 'set-server-uri':{
             serverUri = data.value;
+        }
     }
 });
 
